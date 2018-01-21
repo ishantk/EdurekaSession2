@@ -7,9 +7,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
+import android.os.PersistableBundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,6 +38,62 @@ public class ActivityOne extends AppCompatActivity implements View.OnClickListen
         setContentView(R.layout.activity_one);
 
         initViews();
+
+        Log.i("ActivityOne","onCreate");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.i("ActivityOne","onStart");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i("ActivityOne","onResume");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i("ActivityOne","onPause");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i("ActivityOne","onStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i("ActivityOne","onDestroy");
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // Store the state of an object i.e. Saving the state of activity instance in Bundle
+        String name = eTxtName.getText().toString();
+        outState.putString("keyName",name);
+
+        Log.i("ActivityOne","onSaveInstanceState");
+        showNotification("onSaveInstanceState");
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        String name = savedInstanceState.getString("keyName");
+
+        // Just do processing
+
+        Log.i("ActivityOne","onRestoreInstanceState");
+        showNotification("onRestoreInstanceState");
     }
 
     @Override
@@ -87,11 +145,11 @@ public class ActivityOne extends AppCompatActivity implements View.OnClickListen
         // Get the data back from A2 into A1 | Backward Passing
         //startActivityForResult(intent,101);
 
-        showNotification();
+        //showNotification();
     }
 
 
-    void showNotification(){
+    void showNotification(String message){
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
@@ -115,9 +173,9 @@ public class ActivityOne extends AppCompatActivity implements View.OnClickListen
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "myChannel");
 
         builder.setSmallIcon(R.drawable.music);
-        builder.setContentTitle("This is Title");
-        builder.setContentText("This is Text");
-        builder.setStyle(new NotificationCompat.BigTextStyle().setBigContentTitle("This is a Big Title"));
+        builder.setContentTitle(message);
+        builder.setContentText(message);
+        builder.setStyle(new NotificationCompat.BigTextStyle().setBigContentTitle(message));
 
         builder.addAction(android.R.drawable.ic_menu_add,"Add",null);
         builder.addAction(android.R.drawable.ic_menu_delete,"Delete",null);
@@ -126,9 +184,8 @@ public class ActivityOne extends AppCompatActivity implements View.OnClickListen
 
         notificationManager.notify(201, notification);
 
-
-
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
