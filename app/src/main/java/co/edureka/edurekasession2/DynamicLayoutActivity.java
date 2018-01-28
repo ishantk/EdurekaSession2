@@ -1,6 +1,7 @@
 package co.edureka.edurekasession2;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -48,5 +49,26 @@ public class DynamicLayoutActivity extends AppCompatActivity {
         });
 
         setContentView(relativeLayout);
+
+        Toast.makeText(this,"--onCreate--",Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Toast.makeText(this,"--onDestroy--",Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        if(newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            Toast.makeText(this,"--Portrait Mode--",Toast.LENGTH_LONG).show();
+        }
+
+        if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
+            Toast.makeText(this,"--Landscape Mode--",Toast.LENGTH_LONG).show();
+        }
     }
 }

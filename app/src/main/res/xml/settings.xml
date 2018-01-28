@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="KeyNotification"
+        android:title="Check Preference for Notifications" />
+
+    <EditTextPreference
+        android:defaultValue="Default value"
+        android:key="keyName"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Edit Name Preference" />
+
+</PreferenceScreen>
